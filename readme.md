@@ -1,5 +1,5 @@
 # Boson+ Thermal Gradient Analysis
-**Shreyan Goswami**
+**When Life gives you a thermal camera, capture images**
 
 Python pipeline for relative thermal gradient measurement using a Teledyne FLIR Boson+ 640 thermal camera. Designed for imaging silica substrates in vacuum through a ZnSe viewport, with a 72.71mm relay lens giving ~11.5 µm/pixel spatial resolution over a ~7.4 × 5.9 mm FOV.
 
@@ -20,7 +20,7 @@ Python pipeline for relative thermal gradient measurement using a Teledyne FLIR 
 |------|---------|
 | `boson_dark.py` | Captures dark reference frame with lens cap on |
 | `boson_calibrate.py` | Multi-point calibration using fridge-to-room temperature block |
-| `boson_gradient_v2.py` | Main measurement script — thermal map and gradient analysis |
+| `boson_gradient_v2.py` | Main measurement script- thermal map and gradient analysis |
 
 ---
 
@@ -55,7 +55,7 @@ python "path\to\scripts\<script>.py"
 
 ## Workflow
 
-### Step 1 — Dark frame (run once per camera reconfiguration)
+### Step 1- Dark frame (run once per camera reconfiguration)
 ```
 python boson_dark.py
 ```
@@ -63,7 +63,7 @@ python boson_dark.py
 - Captures 16 averaged frames → saves `dark.tiff`
 - Corrects for fixed pattern noise and bad pixels
 
-### Step 2 — Calibration (run once per setup)
+### Step 2- Calibration (run once per setup)
 ```
 python boson_calibrate.py
 ```
@@ -71,20 +71,20 @@ python boson_calibrate.py
 - Captures every 60 seconds, enter BSIDE reading after each capture
 - Fits linear regression through all (counts, temperature) pairs
 - Saves `calibration.json` with slope, intercept, R², noise floor
-- Prints run command for `boson_gradient_v2.py` at the end — run it manually when ready
+- Prints run command for `boson_gradient_v2.py` at the end; run it manually when ready
 - **Target:** R² > 0.97, temperature range > 15°C
 
-### Step 3 — Measurement (run manually after calibration is complete)
+### Step 3- Measurement (run manually after calibration is complete)
 ```
 cd "path\to\SDK_USER_PERMISSIONS\parent"
 python "path\to\scripts\boson_gradient_v2.py"
 ```
-**Mode 1 — Relative heating:**
+**Mode 1- Relative heating:**
 - Captures cold background then heated substrate
 - Subtracts to isolate temperature change only
 - Best for: locating where heating occurs and mapping gradients
 
-**Mode 2 — Substrate snapshot:**
+**Mode 2- Substrate snapshot:**
 - Single capture, dark subtracted
 - Option A: absolute temperature in °C per pixel
 - Option B: ΔT from scene mean in mC
@@ -93,7 +93,7 @@ python "path\to\scripts\boson_gradient_v2.py"
 ---
 
 ## Output Files
-All saved to `Documents\FLIR images\`
+All saved to `PATH\to\FLIR images\`
 
 | File | Contents |
 |------|---------|
@@ -120,7 +120,7 @@ Calibration and reference files saved to `SDK\SDK\SDK\`:
 - Linear fit: `T(°C) = intercept + counts × degrees_per_count`
 - Absolute temperature uses dark-subtracted counts as input
 - Gradient units: mC/mm (calibrated) or counts/mm (uncalibrated)
-- Spatial scale: 11.5 µm/pixel → gradients in temperature per mm on substrate
+- Spatial scale: 11.5 µm/pixel TO gradients in temperature per mm on substrate
 - Bad pixels removed via median filter before gradient computation
 
 ---
